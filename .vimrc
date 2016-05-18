@@ -24,6 +24,8 @@ Plugin 'VundleVim/Vundle.vim'
 
 
 Plugin 'scrooloose/nerdtree'
+let NERDTreeShowHidden=1
+
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 map <C-n> :NERDTreeToggle<CR>
 
