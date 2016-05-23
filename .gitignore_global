@@ -1,6 +1,7 @@
-# IDEs #
-########
+# IDEs and editors #
+####################
 .idea/
+*.swp
 
 # Compiled source #
 ###################
