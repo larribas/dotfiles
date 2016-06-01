@@ -1,6 +1,8 @@
 set nocompatible
 filetype off
 
+set shell=bash\ --norc
+
 set encoding=utf-8
 set backspace=2   " Backspace deletes like most programs in insert mode
 set showcmd
@@ -21,13 +23,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-
-
-Plugin 'scrooloose/nerdtree'
-let NERDTreeShowHidden=1
-
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-map <C-n> :NERDTreeToggle<CR>
 
 Plugin 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
