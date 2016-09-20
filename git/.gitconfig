@@ -1,11 +1,13 @@
 [push]
-	default = simple
+  default = upstream
 [user]
-	name = larribas
-	email = lorenzo.s.arribas@gmail.com
+  name = larribas
+  email = lorenzo.s.arribas@gmail.com
 [core]
-	excludesfile = ~/.gitignore_global
-	editor = /usr/bin/vim
+  editor = nvim
+  excludesfile = ~/.gitignore_global
+[advice]
+  statusHints = false
 [alias]
   ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
   ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
