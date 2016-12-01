@@ -1,17 +1,14 @@
-# Load all aliases
 . ~/.config/omf/aliases.fish
+
+if test -e ~/.config/omf/exclusive_aliases.fish
+    echo "Loading exclusive aliases for this computer"
+    . ~/.config/omf/exclusive_aliases.fish
+end
+
 
 # Main editor
 set -gx VISUAL nvim
 set -gx EDITOR nvim
-
-# SSH Agent
-if test -z "$SSH_ENV"
-    setenv SSH_ENV $HOME/.ssh/environment
-end
-if not __ssh_agent_is_started
-    __ssh_agent_start
-end
 
 # Ruby
 source /usr/local/share/chruby/chruby.fish
