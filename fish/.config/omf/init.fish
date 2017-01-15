@@ -13,3 +13,8 @@ set -gx EDITOR nvim
 # Ruby
 source /usr/local/share/chruby/chruby.fish
 source /usr/local/share/chruby/auto.fish
+
+# Go
+set -gx GOPATH ~/Dev/go
+set -gx GOBIN ~/Dev/go/bin
+set -gx PATH $GOBIN $PATH
