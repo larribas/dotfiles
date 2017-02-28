@@ -1,5 +1,6 @@
 [push]
   default = upstream
+  recurseSubmodules = check
 [user]
   name = larribas
   email = lorenzo.s.arribas@gmail.com
