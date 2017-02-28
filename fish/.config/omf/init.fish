@@ -18,3 +18,7 @@ source /usr/local/share/chruby/auto.fish
 set -gx GOPATH ~/Dev/go
 set -gx GOBIN ~/Dev/go/bin
 set -gx PATH $GOBIN $PATH
+
+# gcloud
+set fish_user_paths /Users/loa/google-cloud-sdk/bin
+set -x MANPATH /Users/loa/google-cloud-sdk/help/man /usr/local/share/man /usr/share/man /opt/x11/share/man
