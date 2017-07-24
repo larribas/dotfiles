@@ -15,5 +15,5 @@ case Linux
   abbr -a cpkey='xclip -sel clip < ~/.ssh/id_rsa.pub'
 end
 
-
-
+# Docker
+abbr -a dc='docker-compose'

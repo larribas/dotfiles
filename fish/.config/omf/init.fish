@@ -5,6 +5,8 @@ if test -e ~/.config/omf/exclusive_aliases.fish
     . ~/.config/omf/exclusive_aliases.fish
 end
 
+. ~/.config/omf/functions/ssh_agent.fish
+
 
 # Main editor
 set -gx VISUAL nvim
@@ -17,7 +19,10 @@ source /usr/local/share/chruby/auto.fish
 # Go
 set -gx GOPATH ~/Dev/go
 set -gx GOBIN ~/Dev/go/bin
-set -gx PATH $GOBIN $PATH
+set -gx PATH $GOBIN /usr/local/go/bin $PATH
+
+# Haskell
+set -gx PATH $PATH /home/larribas/.local/bin
 
 # gcloud
 set fish_user_paths /Users/loa/google-cloud-sdk/bin
