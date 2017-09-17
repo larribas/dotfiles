@@ -116,8 +116,6 @@ Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
 " haskell
 "" Haskell Bundle
-Plug 'eagletmt/neco-ghc'
-Plug 'eagletmt/ghcmod-vim'
 Plug 'itchyny/vim-haskell-indent'
 
 
@@ -611,8 +609,7 @@ augroup END
 " haskell
 let g:haskell_conceal_wide = 1
 let g:haskell_multiline_strings = 1
-let g:necoghc_enable_detailed_browse = 1
-autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
+autocmd Filetype haskell setlocal sw=2 sts=2 ts=2
 
 
 " html
