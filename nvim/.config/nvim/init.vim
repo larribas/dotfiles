@@ -483,6 +483,7 @@ noremap <Leader>ft :ElmFormat<CR>
 let g:polyglot_disabled = ['elm']
 
 " ale
+let g:ale_linters = {'fish': []}
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
