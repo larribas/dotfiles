@@ -6,9 +6,6 @@ syntax on
 augroup vimrcEx
   autocmd!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
-
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   autocmd BufReadPost *
@@ -58,11 +55,16 @@ endif
 call plug#begin(expand('~/.config/nvim/plugged'))
 
 "*****************************************************************************
+"" Enable some macros
+"*****************************************************************************
+runtime macros/matchit.vim
+
+"*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
 Plug 'scrooloose/nerdtree'                 " File tree
 Plug 'jistr/vim-nerdtree-tabs'             " File tree as a consistent tab
-Plug 'scrooloose/nerdcommenter'            " Comments
+Plug 'tpope/vim-commentary'                " Comments
 Plug 'tpope/vim-fugitive'                  " Git wrapper
 Plug 'brooth/far.vim'                      " Find and Replace
 Plug 'tpope/vim-surround'                  " Manipulate parenthesis and such
@@ -74,12 +76,15 @@ Plug 'vim-scripts/grep.vim'                " Integrate file grepping
 Plug 'vim-scripts/CSApprox'                " Get color schemes to work for terminal vim
 Plug 'bronson/vim-trailing-whitespace'     " Trailing whitespace is highlighter in red
 Plug 'Raimondi/delimitMate'                " Closes parenthesis et. al. automatically
-Plug 'majutsushi/tagbar'                   " Browse a file's ctags
 Plug 'scrooloose/syntastic'                " Syntax error checker
 Plug 'Yggdroot/indentLine'                 " Shows vertical lines to identify indentation levels
 Plug 'avelino/vim-bootstrap-updater'
+Plug 'elmcast/elm-vim'                     " Elm support. Must be loaded before polyglot
 Plug 'sheerun/vim-polyglot'                " Support for many languages and filetypes
 Plug 'Shougo/deoplete.nvim'                " Code completion (async framework)
+Plug 'kana/vim-textobj-user'               " Enables the creation of custom text objects (needed by textobj-entire)
+Plug 'kana/vim-textobj-entire'             " Adds 'ae' and 'ie' (entire file) text objects
+Plug 'w0rp/ale'                            " Asynchronous linting engine
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " Fuzzy search for files within vim
@@ -106,7 +111,6 @@ Plug 'honza/vim-snippets'
 
 " elm
 "" Elm Bundle
-Plug 'elmcast/elm-vim'
 
 
 " go
@@ -116,7 +120,8 @@ Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
 " haskell
 "" Haskell Bundle
-Plug 'itchyny/vim-haskell-indent'
+Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+Plug 'mpickering/hlint-refactor-vim', { 'for': 'haskell' }
 
 
 " html
@@ -126,17 +131,6 @@ Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-haml'
 Plug 'mattn/emmet-vim'
 
-
-" javascript
-"" Javascript Bundle
-Plug 'jelera/vim-javascript-syntax'
-
-
-" ruby
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-projectionist'
-Plug 'thoughtbot/vim-rspec'
-Plug 'ecomba/vim-ruby-refactoring'
 
 
 "*****************************************************************************
@@ -170,7 +164,7 @@ set backspace=indent,eol,start
 
 "" Tabs. May be overriten by autocmd rules
 set tabstop=4
-set softtabstop=0
+set softtabstop=4
 set shiftwidth=4
 set expandtab
 
@@ -204,12 +198,22 @@ let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
 
+" number increment/decrement
+:nnoremap <A-.> <C-a>
+:nnoremap <A-,> <C-x>
+
+
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
 syntax on
 set ruler
-set relativenumber
+set number relativenumber
+augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+    autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
+augroup END
 
 set mousemodel=popup
 set t_Co=256
@@ -316,30 +320,8 @@ endif
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_space_jump_first = 1
 let g:EasyMotion_smartcase = 1 " Turn on case insensitive feature
-nmap f <Plug>(easymotion-overwin-f2)
-nmap F <Plug>(easymotion-jumptoanywhere)
-
-
-
-
-"*****************************************************************************
-"" Functions
-"*****************************************************************************
-if !exists('*s:setupWrapping')
-  function s:setupWrapping()
-    set wrap
-    set wm=2
-    set textwidth=79
-  endfunction
-endif
-
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
-endfunc
+nmap F <Plug>(easymotion-overwin-f2)
+" nmap F <Plug>(easymotion-jumptoanywhere)
 
 
 "*****************************************************************************
@@ -357,12 +339,6 @@ augroup vimrc-remember-cursor-position
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-"" txt
-augroup vimrc-wrapping
-  autocmd!
-  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
-augroup END
-
 "" make/cmake
 augroup vimrc-make-cmake
   autocmd!
@@ -376,12 +352,9 @@ set autoread
 "" Mappings
 "*****************************************************************************
 
-"" Relative Line numbers
-nnoremap <C-n> :call NumberToggle()<cr>
-
 "" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
+noremap <Leader>- :<C-u>split<CR>
+noremap <Leader>\| :<C-u>vsplit<CR>
 
 "" Git
 noremap <Leader>ga :Gwrite<CR>
@@ -450,10 +423,6 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_auto_loc_list=1
 let g:syntastic_aggregate_errors = 1
 
-" Tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
-
 " Disable visualbell
 set noerrorbells visualbell t_vb=
 if has('autocmd')
@@ -476,10 +445,14 @@ if has('macunix')
 endif
 
 "" Buffer nav
-noremap <leader>z :bp<CR>
-noremap <leader>q :bp<CR>
-noremap <leader>x :bn<CR>
-noremap <leader>w :bn<CR>
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+
+"" Args nav
+nnoremap <silent> [a :previous<CR>
+nnoremap <silent> ]a :next<CR>
 
 "" Close buffer
 " noremap <leader>c :bd<CR>
@@ -487,11 +460,10 @@ noremap <leader>w :bn<CR>
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
 
-"" Switching windows
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
+"" Resize splits
+nnoremap <silent> <Leader>< :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <silent> <Leader>> :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+
 
 "" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
@@ -607,71 +579,12 @@ augroup END
 
 
 " haskell
-let g:haskell_conceal_wide = 1
-let g:haskell_multiline_strings = 1
-autocmd Filetype haskell setlocal sw=2 sts=2 ts=2
 
 
 " html
 " for html files, 2 spaces
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 
-
-" javascript
-let g:javascript_enable_domhtmlcss = 1
-
-" vim-javascript
-augroup vimrc-javascript
-  autocmd!
-  autocmd FileType javascript set tabstop=4|set shiftwidth=4|set expandtab softtabstop=4
-augroup END
-
-
-" ruby
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-
-augroup vimrc-ruby
-  autocmd!
-  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
-  autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2
-augroup END
-
-let g:tagbar_type_ruby = {
-    \ 'kinds' : [
-        \ 'm:modules',
-        \ 'c:classes',
-        \ 'd:describes',
-        \ 'C:contexts',
-        \ 'f:methods',
-        \ 'F:singleton methods'
-    \ ]
-\ }
-
-" RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
-
-" For ruby refactory
-if has('nvim')
-  runtime! macros/matchit.vim
-else
-  packadd! matchit
-endif
-
-" Ruby refactory
-nnoremap <leader>rap  :RAddParameter<cr>
-nnoremap <leader>rcpc :RConvertPostConditional<cr>
-nnoremap <leader>rel  :RExtractLet<cr>
-vnoremap <leader>rec  :RExtractConstant<cr>
-vnoremap <leader>relv :RExtractLocalVariable<cr>
-nnoremap <leader>rit  :RInlineTemp<cr>
-vnoremap <leader>rrlv :RRenameLocalVariable<cr>
-vnoremap <leader>rriv :RRenameInstanceVariable<cr>
-vnoremap <leader>rem  :RExtractMethod<cr>
 
 
 "*****************************************************************************
