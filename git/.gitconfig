@@ -30,3 +30,4 @@
   rh2 = reset HEAD^^ --hard
   ca = commit -a --amend --no-edit
   pf = push --force
+  quick-stats = ! /usr/local/bin/git-quick-stats
