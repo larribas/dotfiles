@@ -225,11 +225,6 @@ end
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
-    -- Take a screenshot
-    -- https://github.com/copycat-killer/dots/blob/master/bin/screenshot
-    awful.key({ modkey,         }, "p", function() os.execute("spectacle -a -b -n") end),
-    awful.key({ modkey, "Shift" }, "p", function() os.execute("spectacle -f -b -n") end),
-
     -- Media Keys
     awful.key({ }, "XF86AudioPlay", sendToSpotify("PlayPause")),
     awful.key({ }, "XF86AudioNext", sendToSpotify("Next")),
