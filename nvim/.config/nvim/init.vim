@@ -76,7 +76,6 @@ Plug 'vim-scripts/grep.vim'                " Integrate file grepping
 Plug 'vim-scripts/CSApprox'                " Get color schemes to work for terminal vim
 Plug 'bronson/vim-trailing-whitespace'     " Trailing whitespace is highlighter in red
 Plug 'Raimondi/delimitMate'                " Closes parenthesis et. al. automatically
-Plug 'scrooloose/syntastic'                " Syntax error checker
 Plug 'Yggdroot/indentLine'                 " Shows vertical lines to identify indentation levels
 Plug 'avelino/vim-bootstrap-updater'
 Plug 'elmcast/elm-vim'                     " Elm support. Must be loaded before polyglot
@@ -108,10 +107,6 @@ Plug 'honza/vim-snippets'
 "*****************************************************************************
 "" Custom bundles
 "*****************************************************************************
-
-" elm
-"" Elm Bundle
-
 
 " go
 "" Go Lang Bundle
@@ -266,7 +261,6 @@ endif
 
 " vim-airline
 let g:airline_theme = 'powerlineish'
-let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
@@ -414,15 +408,6 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
 
-" syntastic
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors = 1
-
 " Disable visualbell
 set noerrorbells visualbell t_vb=
 if has('autocmd')
@@ -489,7 +474,6 @@ let g:deoplete#enable_smart_case = 1
 " elm-vim
 let g:elm_setup_keybindings = 0
 let g:elm_format_autosave = 1
-let g:elm_syntastic_show_warnings = 1
 
 noremap <Leader>d :ElmShowDocs<CR>
 noremap <Leader>wd :ElmBrowseDocs<CR>
@@ -498,10 +482,9 @@ noremap <Leader>ft :ElmFormat<CR>
 " vim-polyglot
 let g:polyglot_disabled = ['elm']
 
-" syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-
+" ale
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " go
 let g:tagbar_type_go = {
@@ -530,8 +513,6 @@ endfunction
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
-let g:syntastic_go_checkers = ['golint', 'govet']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
