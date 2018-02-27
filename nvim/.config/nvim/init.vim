@@ -24,8 +24,6 @@ if !exists(":DiffOrig")
 endif
 
 
-" vim-bootstrap 3340bde
-
 "*****************************************************************************
 "" Vim-PLug core
 "*****************************************************************************
@@ -66,24 +64,25 @@ Plug 'scrooloose/nerdtree'                 " File tree
 Plug 'jistr/vim-nerdtree-tabs'             " File tree as a consistent tab
 Plug 'tpope/vim-commentary'                " Comments
 Plug 'tpope/vim-fugitive'                  " Git wrapper
-Plug 'brooth/far.vim'                      " Find and Replace
 Plug 'tpope/vim-surround'                  " Manipulate parenthesis and such
+Plug 'tpope/vim-abolish'                   " :Subvert command that allows you to run substitutions with several variations of case and word pairing
 Plug 'easymotion/vim-easymotion'           " Move around easily
 Plug 'vim-airline/vim-airline'             " Status bar
 Plug 'vim-airline/vim-airline-themes'      " Themes for the status bar
 Plug 'airblade/vim-gitgutter'              " Git diffing helper
-Plug 'vim-scripts/grep.vim'                " Integrate file grepping
 Plug 'vim-scripts/CSApprox'                " Get color schemes to work for terminal vim
-Plug 'bronson/vim-trailing-whitespace'     " Trailing whitespace is highlighter in red
-Plug 'Raimondi/delimitMate'                " Closes parenthesis et. al. automatically
+Plug 'bronson/vim-trailing-whitespace'     " Trailing whitespace is highlighted in red
+" Plug 'Raimondi/delimitMate'                " Closes parenthesis et. al. automatically
 Plug 'Yggdroot/indentLine'                 " Shows vertical lines to identify indentation levels
-Plug 'avelino/vim-bootstrap-updater'
 Plug 'elmcast/elm-vim'                     " Elm support. Must be loaded before polyglot
 Plug 'sheerun/vim-polyglot'                " Support for many languages and filetypes
 Plug 'Shougo/deoplete.nvim'                " Code completion (async framework)
 Plug 'kana/vim-textobj-user'               " Enables the creation of custom text objects (needed by textobj-entire)
 Plug 'kana/vim-textobj-entire'             " Adds 'ae' and 'ie' (entire file) text objects
 Plug 'w0rp/ale'                            " Asynchronous linting engine
+Plug 'nelstrom/vim-visual-star-search'     " Use '*' in visual mode to perform a search for the current selection
+Plug 'nelstrom/vim-qargs'                  " Use :Qargs to populate the :args list with the quickfix results
+
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " Fuzzy search for files within vim
@@ -173,6 +172,12 @@ set hidden
 set hlsearch
 set incsearch
 set smartcase
+set ignorecase
+set infercase
+
+" Spelling
+set dictionary=/usr/share/dict/words
+set nospell
 
 set fileformats=unix,dos,mac
 
@@ -293,12 +298,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <leader>2 :NERDTreeFind<CR>
 noremap <leader>1 :NERDTreeToggle<CR>
 
-" grep.vim
-nnoremap <silent> <leader>f :Rgrep<CR>
-let Grep_Default_Options = '-IR'
-let Grep_Skip_Files = '*.log *.db'
-let Grep_Skip_Dirs = '.git node_modules elm-stuff'
-
 " vimshell.vim
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 let g:vimshell_prompt =  '$ '
@@ -391,13 +390,6 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
 
-" ripgrep
-if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-  set grepprg=rg\ --vimgrep
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-endif
-
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :FZF -m<CR>
@@ -438,6 +430,12 @@ nnoremap <silent> ]B :blast<CR>
 "" Args nav
 nnoremap <silent> [a :previous<CR>
 nnoremap <silent> ]a :next<CR>
+
+"" Quickfix nav
+nnoremap <silent> [c :cprevious<CR>
+nnoremap <silent> ]c :cnext<CR>
+nnoremap <silent> [C :colder<CR>
+nnoremap <silent> ]C :cnewer<CR>
 
 "" Close buffer
 " noremap <leader>c :bd<CR>
@@ -483,6 +481,7 @@ noremap <Leader>ft :ElmFormat<CR>
 let g:polyglot_disabled = ['elm']
 
 " ale
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_linters = {'fish': []}
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
@@ -535,32 +534,6 @@ augroup completion_preview_close
     autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
   endif
 augroup END
-
-augroup go
-
-  au!
-  au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-
-  au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
-  au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-  au FileType go nmap <Leader>db <Plug>(go-doc-browser)
-
-  au FileType go nmap <leader>r  <Plug>(go-run)
-  au FileType go nmap <leader>t  <Plug>(go-test)
-  au FileType go nmap <Leader>gt <Plug>(go-coverage-toggle)
-  au FileType go nmap <Leader>i <Plug>(go-info)
-  au FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
-  au FileType go nmap <C-g> :GoDecls<cr>
-  au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
-  au FileType go nmap <leader>rb :<C-u>call <SID>build_go_files()<CR>
-
-augroup END
-
-
-" haskell
 
 
 " html
