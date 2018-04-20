@@ -27,3 +27,6 @@ set -gx PATH $PATH /home/larribas/.local/bin
 # gcloud
 set fish_user_paths /Users/loa/google-cloud-sdk/bin
 set -x MANPATH /Users/loa/google-cloud-sdk/help/man /usr/local/share/man /usr/share/man /opt/x11/share/man
+
+# Javascript
+set -gx PATH $HOME/.config/yarn/global/node_modules/.bin $PATH

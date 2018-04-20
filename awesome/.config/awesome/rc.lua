@@ -446,7 +446,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "d", function () awful.spawn("dolphin") end),
     awful.key({ }, "F9" , function () awful.spawn("spotify") end),
     awful.key({ }, "F10", function () awful.spawn("slack") end),
-    awful.key({ }, "F11", function () awful.spawn("thunderbird") end),
     awful.key({ }, "F12", function () awful.spawn("/opt/franz/Franz") end),
 
     -- Default

@@ -33,7 +33,6 @@ endif
 
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 
-let g:vim_bootstrap_langs = "elm,go,haskell,html,javascript,ruby"
 let g:vim_bootstrap_editor = "nvim"				" nvim or vim
 
 if !filereadable(vimplug_exists)
@@ -83,7 +82,6 @@ Plug 'w0rp/ale'                            " Asynchronous linting engine
 Plug 'nelstrom/vim-visual-star-search'     " Use '*' in visual mode to perform a search for the current selection
 Plug 'nelstrom/vim-qargs'                  " Use :Qargs to populate the :args list with the quickfix results
 
-
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " Fuzzy search for files within vim
 else
@@ -124,7 +122,8 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-haml'
 Plug 'mattn/emmet-vim'
-
+Plug 'kewah/vim-stylefmt'           " Format CSS automatically
+" Plug 'lepture/vim-jinja'
 
 
 "*****************************************************************************
@@ -171,9 +170,6 @@ set hidden
 "" Searching
 set hlsearch
 set incsearch
-set smartcase
-set ignorecase
-set infercase
 
 " Spelling
 set dictionary=/usr/share/dict/words
@@ -482,7 +478,11 @@ let g:polyglot_disabled = ['elm']
 
 " ale
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_linters = {'fish': []}
+let g:ale_linters = {
+\ 'fish': [],
+\ 'javascript': ['eslint'],
+\ 'elm': [],
+\}
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
@@ -539,8 +539,8 @@ augroup END
 " html
 " for html files, 2 spaces
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
-
-
+autocmd Filetype ruby setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufWritePost *.{css,scss} Stylefmt
 
 "*****************************************************************************
 "*****************************************************************************
