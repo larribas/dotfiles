@@ -29,4 +29,4 @@ set fish_user_paths /Users/loa/google-cloud-sdk/bin
 set -x MANPATH /Users/loa/google-cloud-sdk/help/man /usr/local/share/man /usr/share/man /opt/x11/share/man
 
 # Javascript
-set -gx PATH $HOME/.config/yarn/global/node_modules/.bin $PATH
+set -gx PATH ./node_modules/.bin $HOME/.config/yarn/global/node_modules/.bin $PATH

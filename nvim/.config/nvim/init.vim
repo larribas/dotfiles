@@ -538,7 +538,7 @@ augroup END
 
 " html
 " for html files, 2 spaces
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
+autocmd Filetype html,javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd BufWritePost *.{css,scss} Stylefmt
 
