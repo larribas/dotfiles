@@ -443,10 +443,9 @@ globalkeys = awful.util.table.join(
 
     -- User programs
     awful.key({ modkey }, "b", function () awful.spawn(browser) end),
-    awful.key({ modkey }, "d", function () awful.spawn("dolphin") end),
-    awful.key({ }, "F9" , function () awful.spawn("spotify") end),
+    awful.key({ modkey }, "d", function () awful.spawn("nautilus") end),
     awful.key({ }, "F10", function () awful.spawn("slack") end),
-    awful.key({ }, "F12", function () awful.spawn("/opt/franz/Franz") end),
+    awful.key({ }, "F12", function () awful.spawn("franz") end),
 
     -- Default
     --[[ Menubar
