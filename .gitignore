@@ -1,5 +1,11 @@
 nvim/.config/nvim/autoload/
 nvim/.config/nvim/plugged/
+nvim/.config/nvim/.netrwhist
+
 fish/.config/fish/conf.d/
 fish/.config/fish/fishd*
+
+tmux/.tmux/resurrect/
+tmux/.tmux/plugins/
+
 

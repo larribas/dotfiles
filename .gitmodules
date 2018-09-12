@@ -4,3 +4,6 @@
 [submodule "awesome/.config/awesome/freedesktop"]
 	path = awesome/.config/awesome/freedesktop
 	url = https://github.com/copycat-killer/awesome-freedesktop.git
+[submodule "tmux/.tmux/tpm"]
+	path = tmux/.tmux/tpm
+	url = https://github.com/tmux-plugins/tpm
