@@ -8,4 +8,5 @@ fish/.config/fish/fishd*
 tmux/.tmux/resurrect/
 tmux/.tmux/plugins/
 
+fonts/.fonts/.uuid
 
