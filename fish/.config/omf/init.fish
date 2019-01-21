@@ -17,6 +17,9 @@ set -gx EDITOR emacs
 # Javascript
 set -gx PATH ./node_modules/.bin $HOME/.config/yarn/global/node_modules/.bin $PATH
 
+# Haskell
+set -gx PATH $HOME/.local/bin $PATH
+
 # emacs ansi-term support
 if test -n "$EMACS"
   set -x TERM eterm-color
