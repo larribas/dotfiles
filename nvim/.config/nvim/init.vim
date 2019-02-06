@@ -12,7 +12,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-abolish'
   Plug 'tpope/vim-unimpaired'
-  Plug 'jiangmiao/auto-pairs'
   Plug 'xolox/vim-misc'
   Plug 'xolox/vim-notes'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -21,6 +20,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'ervandew/supertab'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'eugen0329/vim-esearch'
+  Plug 'elmcast/elm-vim'
 call plug#end()
 
 " Fundamental settings
@@ -69,7 +69,7 @@ call plug#end()
   noremap <Leader>\| :<C-u>vsplit<CR>
 
 " NERDTree
-  map <C-f> :NERDTreeToggle<CR>
+  map <C-f> :NERDTreeFind<CR>
 
 " Airline
   let g:airline_theme = 'powerlineish'
@@ -94,6 +94,7 @@ call plug#end()
 
 " Ale "
   let g:ale_linters_explicit = 1
-  " let g:ale_linters = {
-  " \   'haskell': ['stack-ghc', 'hlint'],
-  " \}
+  let g:ale_linters = {
+  \   'haskell': [],
+  \   'elm': ['elm-format', 'elm-make'],
+  \}
