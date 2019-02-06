@@ -1,22 +1,18 @@
 # Unix
-abbr -a mkdir='mkdir -p'
-abbr -a e='eval $EDITOR'
-
-# Ruby
-abbr -a bi='bundle install'
-abbr -a be='bundle exec'
+abbr --add mkdir 'mkdir -p'
+abbr --add e 'eval $EDITOR'
 
 # Pbcopy on linux
 switch (uname)
 case Darwin 
-  abbr -a cpkey='pbcopy < ~/.ssh/id_rsa.pub'
+  abbr --add cpkey 'pbcopy < ~/.ssh/id_rsa.pub'
 case Linux
-  abbr -a pbcopy='xclip -sel clip'
-  abbr -a cpkey='xclip -sel clip < ~/.ssh/id_rsa.pub'
+  abbr --add pbcopy 'xclip -sel clip'
+  abbr --add cpkey 'xclip -sel clip < ~/.ssh/id_rsa.pub'
 end
 
 # Docker
-abbr -a dc='docker-compose'
+abbr --add dc 'docker-compose'
 
 # Git
 abbr g 'git'
@@ -33,7 +29,7 @@ abbr gpf 'git push --force'
 abbr gpl 'git pull'
 abbr gs 'git status'
 abbr gst 'git stash'
-abbr gca='git commit -a --amend --no-edit'
-abbr gqs='/usr/local/bin/git-quick-stats'
+abbr gca 'git commit -a --amend --no-edit'
+abbr gqs '/usr/local/bin/git-quick-stats'
 
 
