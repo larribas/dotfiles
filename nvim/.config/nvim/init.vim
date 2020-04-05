@@ -58,7 +58,7 @@ call plug#end()
 
 " Looks
   set number relativenumber  "line number
-  set nowrap                 "no line wrapping
+  set wrap                   "line wrapping
 
 " Maintain Visual Mode after shifting > and <
   vmap < <gv

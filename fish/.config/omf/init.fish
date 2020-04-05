@@ -11,8 +11,8 @@ end
 
 
 # Main editor
-set -gx VISUAL emacs
-set -gx EDITOR emacs
+set -gx VISUAL nvim
+set -gx EDITOR nvim
 
 # Javascript
 set -gx PATH ./node_modules/.bin $HOME/.config/yarn/global/node_modules/.bin $PATH
@@ -20,10 +20,8 @@ set -gx PATH ./node_modules/.bin $HOME/.config/yarn/global/node_modules/.bin $PA
 # Haskell
 set -gx PATH $HOME/.local/bin $PATH
 
-# emacs ansi-term support
-if test -n "$EMACS"
-  set -x TERM eterm-color
-end
+# Rust
+set -gx PATH $HOME/.cargo/bin $PATH
 
 # this function may be required
 function fish_title
