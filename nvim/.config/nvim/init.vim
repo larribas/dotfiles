@@ -21,6 +21,9 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'terryma/vim-multiple-cursors'
   Plug 'eugen0329/vim-esearch'
   Plug 'elmcast/elm-vim'
+  Plug 'hashivim/vim-terraform'
+  Plug 'vim-syntastic/syntastic'
+  Plug 'juliosueiras/vim-terraform-completion'
 call plug#end()
 
 " Fundamental settings
