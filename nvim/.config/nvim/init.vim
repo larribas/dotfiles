@@ -22,8 +22,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'eugen0329/vim-esearch'
   Plug 'elmcast/elm-vim'
   Plug 'hashivim/vim-terraform'
-  Plug 'vim-syntastic/syntastic'
-  Plug 'juliosueiras/vim-terraform-completion'
+  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " Fundamental settings
@@ -100,4 +99,21 @@ call plug#end()
   let g:ale_linters = {
   \   'haskell': [],
   \   'elm': ['elm-format', 'elm-make'],
+  \   'python': ['flake8'],
   \}
+  let g:ale_fix_on_save = 1
+  let g:ale_fixers = {
+  \   'python': ['black', 'isort'],
+  \}
+
+
+" Go "
+  let g:go_fmt_command = "goimports"
+  let g:go_metalinter_autosave = 1
+  let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+  let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+
+  autocmd FileType go nmap <leader>t  <Plug>(go-test)
+  autocmd FileType go nmap <leader>d  <Plug>(go-def)
+  autocmd FileType go nmap <leader>i  <Plug>(go-info)
+
