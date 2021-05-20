@@ -23,6 +23,17 @@ set -gx PATH $HOME/.local/bin $PATH
 # Rust
 set -gx PATH $HOME/.cargo/bin $PATH
 
+# Go
+set -gx PATH /usr/local/go/bin $PATH
+
+# Netlify
+set -gx PATH $HOME/.netlify/helper/bin $PATH
+
+# Python
+set -gx PATH $HOME/.pyenv/bin $PATH
+set -gx PATH $HOME/.pyenv/shims $PATH
+pyenv rehash
+
 # this function may be required
 function fish_title
   true
